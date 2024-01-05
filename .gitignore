@@ -1,0 +1,12 @@
+/NurRealEstateWebApp/bin/
+/NurRealEstateWebApp/obj/
+/NurRealEstateWebApp/wwwroot/lib/
+/NurRealEstateWebApp/config/
+.vs/NurRealEstateWebApp/config/
+.vs\NurRealEstateWebApp\FileContentIndex\
+*.vsidx
+*.v2
+.vs/NurRealEstateWebApp/v17/.suo
+*.bin
+
+*.ico
