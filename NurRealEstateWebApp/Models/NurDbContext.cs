@@ -1,4 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using NurRealEstateWebApp.Entities;
 using Pomelo.EntityFrameworkCore.MySql;
