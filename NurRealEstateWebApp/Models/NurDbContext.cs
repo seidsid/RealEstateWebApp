@@ -14,5 +14,7 @@ namespace NurRealEstateWebApp.Models
         }
 
         public DbSet<Property> Property { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<Agent> Agent { get; set; }
     }
 }
