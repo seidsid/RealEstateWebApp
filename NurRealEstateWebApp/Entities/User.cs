@@ -4,19 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NurRealEstateWebApp.Entities
 {
-    public class Agent
+    public class User
     {
         [Key]
-        public Guid AgentId { get; set; }
-
-        [Required(ErrorMessage = "Nationality is required.")]
-        public string Nationality { get; set; }
-
-        [Required(ErrorMessage = "Languages is required.")]
-        public string Languages { get; set; }
-
-        [Required(ErrorMessage = "Experience since date is required.")]
-        public DateTime ExperienceSince { get; set; }
+        public Guid UserId { get; set; }
 
         [Required(ErrorMessage = "Contact ID is required.")]
         public Guid ContactId { get; set; }
@@ -24,13 +15,8 @@ namespace NurRealEstateWebApp.Entities
         [Required(ErrorMessage = "Account ID is required.")]
         public Guid AccountId { get; set; }
 
-        [Required(ErrorMessage = "Admin ID is required.")]
-        public Guid AdminId { get; set; }
-
         [Required(ErrorMessage = "Account is required.")]
         public virtual Account Account { get; set; }
-
-        public virtual Admin Admin { get; set; }
 
         [Required(ErrorMessage = "Contact is required.")]
         public virtual Contact Contact { get; set; }
