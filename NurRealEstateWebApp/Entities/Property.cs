@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NurRealEstateWebApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NurRealEstateWebApp.Entities
@@ -33,12 +34,6 @@ namespace NurRealEstateWebApp.Entities
 
         [Range(0, int.MaxValue, ErrorMessage = "Number of parking spaces must be a positive number.")]
         public int NoParking { get; set; }
-
-        [Required(ErrorMessage = "User ID is required.")]
-        public Guid UserId { get; set; }
-
-        [Required(ErrorMessage = "Agent ID is required.")]
-        public Guid AgentId { get; set; }
 
         [Required(ErrorMessage = "Listed date is required.")]
         public DateTime ListedDate { get; set; }

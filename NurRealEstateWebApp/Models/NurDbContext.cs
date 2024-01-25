@@ -64,8 +64,6 @@ namespace NurRealEstateWebApp.Models
 
                 entity.ToTable("address");
 
-                entity.HasIndex(e => e.PropertyId, "property_id");
-
                 entity.Property(e => e.AddressId)
                     .HasMaxLength(36)
                     .HasColumnName("address_id");
@@ -75,18 +73,9 @@ namespace NurRealEstateWebApp.Models
                 entity.Property(e => e.HouseNo)
                     .HasMaxLength(50)
                     .HasColumnName("house_no");
-                entity.Property(e => e.PropertyId)
-                    .HasMaxLength(36)
-                    .HasColumnName("property_id");
                 entity.Property(e => e.SubCity)
                     .HasMaxLength(100)
                     .HasColumnName("sub_city");
-
-                entity.HasOne(d => d.Property)
-                      .WithOne(p => p.Address)
-                      .HasForeignKey<Address>(d => d.PropertyId)
-                      .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("address_ibfk_1");
             });
 
             modelBuilder.Entity<Admin>(entity =>
@@ -95,29 +84,26 @@ namespace NurRealEstateWebApp.Models
 
                 entity.ToTable("admin");
 
-                entity.HasIndex(e => e.AccountId, "account_id");
-
-                entity.HasIndex(e => new { e.ContactId, e.AccountId }, "contact_id");
-
                 entity.Property(e => e.AdminId)
                     .HasMaxLength(36)
                     .HasColumnName("admin_id");
-                entity.Property(e => e.AccountId)
-                    .HasMaxLength(36)
-                    .HasColumnName("account_id");
-                entity.Property(e => e.ContactId)
-                    .HasMaxLength(36)
-                    .HasColumnName("contact_id");
 
-                entity.HasOne(d => d.Account).WithMany(p => p.Admins)
-                    .HasForeignKey(d => d.AccountId)
+                entity.HasOne(a => a.Account)
+                    .WithOne()
+                    .HasForeignKey<Admin>("account_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("admin_ibfk_3");
 
-                entity.HasOne(d => d.Contact).WithMany(p => p.Admins)
-                    .HasForeignKey(d => d.ContactId)
+                entity.HasOne(d => d.Contact)
+                    .WithOne()
+                    .HasForeignKey<Admin>("contact_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("admin_ibfk_1");
+
+                entity.HasMany(d => d.Agents)
+                    .WithOne(a => a.Admin)
+                    .HasForeignKey("admin_id") // admin table doesn't contain agent_id / instead agent table contain admin_id
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Agent>(entity =>
@@ -126,48 +112,44 @@ namespace NurRealEstateWebApp.Models
 
                 entity.ToTable("agent");
 
-                entity.HasIndex(e => e.AccountId, "account_id");
-
-                entity.HasIndex(e => e.AdminId, "agent_ibfk_3_idx");
-
-                entity.HasIndex(e => new { e.ContactId, e.AccountId }, "contact_id");
-
                 entity.Property(e => e.AgentId)
                     .HasMaxLength(36)
                     .HasColumnName("agent_id");
-                entity.Property(e => e.AccountId)
-                    .HasMaxLength(36)
-                    .HasColumnName("account_id");
-                entity.Property(e => e.AdminId)
-                    .HasMaxLength(36)
-                    .HasColumnName("admin_id");
-                entity.Property(e => e.ContactId)
-                    .HasMaxLength(36)
-                    .HasColumnName("contact_id");
+
                 entity.Property(e => e.ExperienceSince)
                     .HasColumnType("datetime")
                     .HasColumnName("experience_since");
+
                 entity.Property(e => e.Languages)
                     .HasMaxLength(100)
                     .HasColumnName("languages");
+
                 entity.Property(e => e.Nationality)
                     .HasMaxLength(50)
                     .HasColumnName("nationality");
 
-                entity.HasOne(d => d.Account).WithMany(p => p.Agents)
-                    .HasForeignKey(d => d.AccountId)
+                entity.HasOne(d => d.Account)
+                    .WithOne()
+                    .HasForeignKey<Agent>("account_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("agent_ibfk_3");
 
-                entity.HasOne(d => d.Admin).WithMany(p => p.Agents)
-                    .HasForeignKey(d => d.AdminId)
+                entity.HasOne(d => d.Admin)
+                    .WithMany(a => a.Agents)
+                    .HasForeignKey("admin_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("agent_ibfk_4");
 
-                entity.HasOne(d => d.Contact).WithMany(p => p.Agents)
-                    .HasForeignKey(d => d.ContactId)
+                entity.HasOne(d => d.Contact)
+                    .WithOne()
+                    .HasForeignKey<Agent>("contact_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("agent_ibfk_1");
+
+                entity.HasMany(d => d.Properties)
+                    .WithOne(a => a.Agent)
+                    .HasForeignKey("agent_id") // agent table doesn't contain property_id / instead property table contain agent id
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Contact>(entity =>
@@ -196,16 +178,9 @@ namespace NurRealEstateWebApp.Models
 
                 entity.ToTable("property");
 
-                entity.HasIndex(e => e.AgentId, "agent_id");
-
-                entity.HasIndex(e => new { e.UserId, e.AgentId }, "user_id");
-
                 entity.Property(e => e.PropertyId)
                     .HasMaxLength(36)
                     .HasColumnName("property_id");
-                entity.Property(e => e.AgentId)
-                    .HasMaxLength(36)
-                    .HasColumnName("agent_id");
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
                     .HasColumnName("description");
@@ -235,19 +210,25 @@ namespace NurRealEstateWebApp.Models
                 entity.Property(e => e.Title)
                     .HasMaxLength(255)
                     .HasColumnName("title");
-                entity.Property(e => e.UserId)
-                    .HasMaxLength(36)
-                    .HasColumnName("user_id");
 
-                entity.HasOne(d => d.Agent).WithMany(p => p.Properties)
-                    .HasForeignKey(d => d.AgentId)
+                entity.HasOne(d => d.Agent)
+                    .WithMany(p => p.Properties)
+                    .HasForeignKey("agent_id") 
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("property_ibfk_2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Properties)
+                    .HasForeignKey("user_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("property_ibfk_1");
 
-                entity.HasOne(d => d.User).WithMany(p => p.Properties)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("property_ibfk_2");
+                entity.HasOne(d => d.Address)
+                     .WithOne()
+                     .HasForeignKey<Property>("address_id")
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("property_ibfk_3");
+
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -256,29 +237,26 @@ namespace NurRealEstateWebApp.Models
 
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.AccountId, "account_id");
-
-                entity.HasIndex(e => e.ContactId, "contact_id");
-
                 entity.Property(e => e.UserId)
                     .HasMaxLength(36)
                     .HasColumnName("user_id");
-                entity.Property(e => e.AccountId)
-                    .HasMaxLength(36)
-                    .HasColumnName("account_id");
-                entity.Property(e => e.ContactId)
-                    .HasMaxLength(36)
-                    .HasColumnName("contact_id");
 
-                entity.HasOne(d => d.Account).WithMany(p => p.Users)
-                    .HasForeignKey(d => d.AccountId)
+                entity.HasOne(d => d.Account)
+                    .WithOne()
+                    .HasForeignKey<User>("account_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("user_ibfk_2");
 
-                entity.HasOne(d => d.Contact).WithMany(p => p.Users)
-                    .HasForeignKey(d => d.ContactId)
+                entity.HasOne(d => d.Contact)
+                    .WithOne()
+                    .HasForeignKey<User>("contact_id")
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("user_ibfk_3");
+
+                entity.HasMany(d => d.Properties)
+                    .WithOne(u => u.User)
+                    .HasForeignKey("user_id") //.HasForeignKey("property_id") not good cause user table doesn't have a property_id column
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             OnModelCreatingPartial(modelBuilder);

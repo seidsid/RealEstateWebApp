@@ -1,0 +1,58 @@
+* {
+    font-family: "Montserrat";
+}
+
+:root {
+    --bg-color: #27AE60;
+    --second-bg-color: #F4F4F4;
+    --text-color: #555555;
+    --text-heading: #333333;
+    --link: #27AE60;
+}
+
+body {
+    background-color: var(--second-bg-color);
+}
+
+.header-wrapper {
+    background-color: var(--bg-color);
+}
+
+#logo {
+    border-radius: 50%;
+}
+
+.container {
+    padding: 0 5%;
+}
+
+.navbar {
+    color: var(--text-heading);
+}
+
+.head_container {
+    font-size: 1rem;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #F7F6FB;
+    color: var(--link); /* Update the text color to match the button background */
+}
+
+.btn-outline-secondary {
+    background-color: #F7F6FB;
+    color: var(--text-heading); /* Update the text color to match the button background */
+}
+
+.form_container {
+    margin-top: 2%;
+    margin-left: 0.9rem;
+}
+
+#property_form {
+    margin-bottom: 2.5rem;
+}
+
+.img_navbar {
+    margin-right: 1rem;
+}

@@ -18,15 +18,6 @@ namespace NurRealEstateWebApp.Entities
         [Required(ErrorMessage = "Experience since date is required.")]
         public DateTime ExperienceSince { get; set; }
 
-        [Required(ErrorMessage = "Contact ID is required.")]
-        public Guid ContactId { get; set; }
-
-        [Required(ErrorMessage = "Account ID is required.")]
-        public Guid AccountId { get; set; }
-
-        [Required(ErrorMessage = "Admin ID is required.")]
-        public Guid AdminId { get; set; }
-
         [Required(ErrorMessage = "Account is required.")]
         public virtual Account Account { get; set; }
 

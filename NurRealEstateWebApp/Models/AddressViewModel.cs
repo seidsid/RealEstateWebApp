@@ -1,10 +1,9 @@
-﻿using System;
+﻿using NurRealEstateWebApp.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NurRealEstateWebApp.Entities
+namespace NurRealEstateWebApp.Models
 {
-    public class Address
+    public class AddressViewModel
     {
         [Key]
         public Guid AddressId { get; set; }

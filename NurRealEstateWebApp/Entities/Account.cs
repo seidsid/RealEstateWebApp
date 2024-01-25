@@ -20,15 +20,7 @@ namespace NurRealEstateWebApp.Entities
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{6,100}$", ErrorMessage = "Password must have at least one uppercase letter, one lowercase letter, one digit, and one special character.")]
         public string Password { get; set; }
 
-
         [Required(ErrorMessage = "Role is required.")]
         public string Role { get; set; }
-
-        public virtual ICollection<Admin> Admins { get; set; } = new List<Admin>();
-
-        public virtual ICollection<Agent> Agents { get; set; } = new List<Agent>();
-
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
-
     }
 }

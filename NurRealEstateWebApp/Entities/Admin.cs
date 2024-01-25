@@ -9,12 +9,6 @@ namespace NurRealEstateWebApp.Entities
         [Key]
         public Guid AdminId { get; set; }
 
-        [Required(ErrorMessage = "Contact ID is required.")]
-        public Guid ContactId { get; set; }
-
-        [Required(ErrorMessage = "Account ID is required.")]
-        public Guid AccountId { get; set; }
-
         [Required(ErrorMessage = "Account is required.")]
         public virtual Account Account { get; set; }
 

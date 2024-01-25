@@ -19,11 +19,5 @@ namespace NurRealEstateWebApp.Entities
 
         [RegularExpression(@"^\+?\d{1,}$", ErrorMessage = "Invalid WhatsApp number.")]
         public string WhatsappNo { get; set; }
-
-        public virtual ICollection<Admin> Admins { get; set; } = new List<Admin>();
-
-        public virtual ICollection<Agent> Agents { get; set; } = new List<Agent>();
-
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }

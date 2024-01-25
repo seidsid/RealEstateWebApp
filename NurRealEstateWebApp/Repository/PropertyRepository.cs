@@ -5,7 +5,7 @@ using NurRealEstateWebApp.Models;
 
 namespace NurRealEstateWebApp.Repository
 {
-    public class PropertyRepository
+    public class PropertyRepository : IPropertyRepository
     {
         private readonly NurDbContext nurDbContext;
 
