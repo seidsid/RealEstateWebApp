@@ -1,58 +1,50 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using NurRealEstateWebApp.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NurRealEstateWebApp.Entities
 {
     public class Property
     {
         [Key]
-        public Guid property_id { get; set; }
+        public Guid PropertyId { get; set; }
 
-        [Required(ErrorMessage = "Title is required")]
-        public string title { get; set; }
+        [Required(ErrorMessage = "Title is required.")]
+        public string Title { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
-        public string description { get; set; }
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
 
-        [Required(ErrorMessage = "Price is required")]
-        [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value")]
-        public decimal price { get; set; }
+        [Range(0, float.MaxValue, ErrorMessage = "Price must be a positive number.")]
+        public float Price { get; set; }
 
-        [Required(ErrorMessage = "Property type is required")]
-        public string property_type { get; set; }
+        [Required(ErrorMessage = "Property type is required.")]
+        public string PropertyType { get; set; }
 
-        [Required(ErrorMessage = "Property size is required")]
-        [Range(0, double.MaxValue, ErrorMessage = "Property size must be a positive value")]
-        public decimal property_size { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Property size must be a positive number.")]
+        public int PropertySize { get; set; }
 
-        [Required(ErrorMessage = "Number of bedrooms is required")]
-        [Range(0, int.MaxValue, ErrorMessage = "Number of bedrooms must be a positive value")]
-        public int no_bedrooms { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Number of bedrooms must be a positive number.")]
+        public int NoBedrooms { get; set; }
 
-        [Required(ErrorMessage = "Number of bathrooms is required")]
-        [Range(0, int.MaxValue, ErrorMessage = "Number of bathrooms must be a positive value")]
-        public int no_bathrooms { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Number of bathrooms must be a positive number.")]
+        public int NoBathrooms { get; set; }
 
-        public bool has_maidsRoom { get; set; }
+        public bool HasMaidsRoom { get; set; }
 
-        [Required(ErrorMessage = "Number of parking spaces is required")]
-        [Range(0, int.MaxValue, ErrorMessage = "Number of parking spaces must be a positive value")]
-        public int no_parking { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Number of parking spaces must be a positive number.")]
+        public int NoParking { get; set; }
 
-        [Required(ErrorMessage = "Listed date is required")]
-        public DateTime listed_date { get; set; }
+        [Required(ErrorMessage = "Listed date is required.")]
+        public DateTime ListedDate { get; set; }
 
-        [Required(ErrorMessage = "Status is required")]
-        public string status { get; set; }
+        [Required(ErrorMessage = "Status is required.")]
+        public string Status { get; set; }
 
-        [ForeignKey("user_id")]
-        public Guid user_id { get; set; }
-/*        public User User { get; set; }
-*/
-        [ForeignKey("agent_id")]
-        public Guid agent_id { get; set; }
-/*        public Agent Agent { get; set; }
-*/
-/*        public Address Address { get; set; }
-*/    }
+        public virtual Address Address { get; set; }
+
+        public virtual Agent Agent { get; set; }
+
+        public virtual User User { get; set; }
+    }
 }

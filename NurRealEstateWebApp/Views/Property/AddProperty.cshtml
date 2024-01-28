@@ -1,0 +1,102 @@
+﻿@model NurRealEstateWebApp.Models.PropertyViewModel;
+
+<link rel="stylesheet" href="/css/property.css">
+
+<div class="head_container">
+
+    <section id="property_form" class="container form-container">
+
+        <div class="container form_container">
+            <h2>Add Property</h2>
+            <form class="main-form" asp-page="/Property/AddProperty" enctype="multipart/form-data" method="post">
+
+                <div class="mb-3">
+                    <label asp-for="Title" for="title" class="form-label">Title</label>
+                    <input asp-for="Title" type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" for="description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Price" for="price" class="form-label">Price</label>
+                    <input asp-for="Price" type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PropertyType" for="propertyType" class="form-label">Property Type</label>
+                    <select asp-for="PropertyType" class="form-select" id="propertyType" name="propertyType" required>
+                        <option value="">Select Property Type</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="whole_building">Whole Building</option>
+                        <option value="villa">Villa</option>
+                        <option value="land">Land</option>
+                        <option value="hotel">Hotel & Hotel Apartment</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PropertySize" for="propertySize" class="form-label">Property Size(sqft)</label>
+                    <input asp-for="PropertySize" type="number" class="form-control" id="propertySize" name="propertySize" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="NoBedrooms" for="bedrooms" class="form-label">Number of Bedrooms( Rooms )</label>
+                    <input asp-for="NoBedrooms" type="number" class="form-control" id="bedrooms" name="noBedrooms" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="NoBathrooms" for="bathrooms" class="form-label">Number of Bathrooms</label>
+                    <input asp-for="NoBathrooms" type="number" class="form-control" id="bathrooms" name="noBathrooms" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input asp-for="HasMaidsRoom" type="checkbox" class="form-check-input" id="hasMaidsRoom" name="hasMaidsRoom">
+                    <label asp-for="HasMaidsRoom" class="form-check-label" for="hasMaidsRoom">Has Maid's Room</label>
+                </div>
+                <div class="mb-3">
+                    <label asp-for ="NoParking" for="parking" class="form-label">Number of Parking Spaces</label>
+                    <input asp-for="NoParking" type="number" class="form-control" id="parking" name="noParking" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ListedDate" for="listedDate" class="form-label">Listed Date</label>
+                    <input asp-for="ListedDate" type="datetime-local" class="form-control" id="listedDate" name="listedDate" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Status" for="Status" class="form-label">Status</label>
+                    <select asp-for="Status" class="form-select" id="Status" name="Status" required>
+                        <option value="active_sell" selected>Active for Sell</option>
+                        <option value="active_rent">Active for Rent</option>
+     @*                    <option value="pending_sell">Pending for Sell</option>
+                        <option value="pending_rent">Pending for Rent</option>
+                        <option value="sold">Sold</option>
+                        <option value="rented">Rented</option> *@
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Images" class="form-label">Images</label>
+                    <input asp-for="Images" type="file" class="form-control" multiple required />
+                    <span asp-validation-for="Images" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Address.HouseNo" class="form-label">House Number</label>
+                    <input asp-for="Address.HouseNo" type="text" class="form-control" id="houseNo" name="Address.HouseNo" required>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Address.City" class="form-label">City</label>
+                    <input asp-for="Address.City" type="text" class="form-control" id="city" name="Address.City" required>
+                </div>
+                <div class="mb-5">
+                    <label asp-for="Address.SubCity" class="form-label">Subcity</label>
+                    <input asp-for="Address.SubCity" type="text" class="form-control" id="subCity" name="Address.SubCity" required>
+                </div>
+@* 
+                <input asp-for="UserId" type="hidden" id="userId" name="userId" value="@Model.UserId">
+                <input asp-for="AgentId" type="hidden" id="agentId" name="agentId" value="@Model.AgentId"> *@
+
+
+                <button type="submit" class="btn btn-primary">Add Property</button>
+            </form>
+        </div>
+
+    </section> <!-- Property Form Section End-->
+
+</div> <!-- Container End-->
