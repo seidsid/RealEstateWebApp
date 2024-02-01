@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --bg-color: #27AE60;
+    --second-bg-color: #F4F4F4;
+    --text-color: #555555 ;
+    --text-heading: #333333;
+    --link: #27AE60;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--second-bg-color);
+}
+
+.price-input {
+    width: 150px;
+}
+
+.light {
+    background-color: #fff;
+    border-radius: 5px;
+    width: 140px;
+
+}
+
+.filters {
+    padding: 20px 0;
+    margin: 0 215px;
+}
+
+.property {
+    margin-top: 15px;
+}
+
+.prop {
+    margin-bottom: 20px;
+}
+
+.prop-img img {
+    width: 530px;
+    height: 264px;
+}
+
+.agent {
+    }
+
+.contact {
+    gap: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-wrapper {
+    margin: 12px;
+    margin-top: 0;  
+    padding: 5px;
+    width: 1170px;
+}
+
+.contact-wrapper h5 {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.contact-wrapper h5 .listed-date {
+    display: flex;
+    align-items: end;
+}
+
+
+
+@media (max-width: 1200px) {
+    .filters {
+        padding: 20px 10px;
+        margin: 0;
+    }
+
+    .prop-img img {
+        width: 530px;
+        height: 250px;
+    }
+
+    .contact-wrapper {
+        margin: 0;
+    }
+}
+

@@ -50,7 +50,11 @@ namespace NurRealEstateWebApp.Service
             await propertyRepository.Persist(property);
 
             bool uploadedImageNames = await imageService.UploadImages(property.PropertyId, pvm.Images.ToArray());
+        }
 
+        public async Task<List<Property>> GetFilter(FilterViewModel fvm)
+        {
+            return await propertyRepository.GetFilters(fvm);
         }
     }
 }

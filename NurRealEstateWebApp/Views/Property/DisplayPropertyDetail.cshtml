@@ -1,0 +1,166 @@
+﻿@model NurRealEstateWebApp.Entities.Property
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment webHostEnvironment
+
+
+<link rel=“stylesheet” href=“https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css” integrity=“sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z” crossorigin=“anonymous”>
+<!-- box icons -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<link rel="stylesheet" href="/css/propertyDetail.css">
+<link rel="stylesheet" href="/css/header.css">
+
+@{
+    ViewData["Title"] = "Properties";
+    // var property = Model;
+}
+
+<body>
+<div class="container main-container">
+
+        <section class="image">
+            @{
+                var imagePath = $"{webHostEnvironment.WebRootPath}/images/{@Model.PropertyId}/";
+                var imageFiles = System.IO.Directory.GetFiles(imagePath);
+                var firstThreeImages = imageFiles.Take(3);
+                var remainingImages = imageFiles.Skip(3);
+                var imageCount = imageFiles.Length;
+            }
+            <div class="row">
+                <div class="col-8 images first-img">
+                    @if (firstThreeImages.Any())
+                    {
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                            <ol class="carousel-indicators">
+                                @for (int i = 0; i < firstThreeImages.Count(); i++)
+                                {
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" @(i == 0 ? "class='active'" : "")></li>
+                                }
+                            </ol>
+                            <div class="carousel-inner">
+                                @foreach (var (imageFile, index) in firstThreeImages.Select((file, index) => (file, index)))
+                                {
+                                    <div class="carousel-item @(index == 0 ? "active" : "")">
+                                        <img src="@Url.Content("~" + imageFile.Replace(webHostEnvironment.WebRootPath, string.Empty))" alt="image">
+                                    </div>
+                                }
+                            </div>
+                            @if (remainingImages.Any())
+                            {
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No image available</p>
+                    }
+                </div>
+                <div class="col-4 images second-img">
+                    @foreach (var imageFile in remainingImages.Take(3))
+                    {
+                        <img src="@Url.Content("~" + imageFile.Replace(webHostEnvironment.WebRootPath, string.Empty))" alt="image">
+                    }
+                    @if (remainingImages.Count() > 3)
+                    {
+                        <a href="#carouselExampleIndicators" class="btn btn-primary" role="button" data-bs-slide-to="0">View All Images</a>
+                    }
+                </div>
+                <div class="col-lg-6 col-12 agent">
+                    <h5><i class='bx bx-camera' style='color:#2b2828'></i> @imageCount</h5>
+                </div>
+            </div>
+        </section>
+
+
+<section class="detail">
+    <div class="row">
+
+        <div class="col-lg-8 col-12 prop-detail">
+            <div class="">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">@Model.Title</h5>
+                    <div class="row">
+                        <p class="col-6 card-title mb-3"><i class='bx bx-building-house' style='color:#e38609'></i> Property type: @Model.PropertyType</p>
+                        <p class="col -6 card-text"><i class='bx bx-current-location' style='color:#ff0005'></i> @Model.Address.City, @Model.Address.SubCity</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-6 card-text"><i class='bx bx-bed'></i> Bedrooms: @Model.NoBedrooms</p>
+                        <p class="col-6 card-text"><i class='bx bx-bath'></i> Bathrooms: @Model.NoBathrooms</p>
+                        <p class="col-4 card-text"><i class='bx bxs-car'></i> Parking Size: @Model.NoParking</p>
+                    </div>
+                    <div class="row mt-3">
+                        <p class="col-6 card-text">Has Maid's Room: @(Model.HasMaidsRoom ? "Yes" : "No")</p>
+                        <p class="col-6 col card-text">Size: @Model.PropertySize sqft</p>
+
+                    </div>
+
+                    <div class="row">
+                        <p class="col-6 card-text">Status: @Model.Status</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-12 prop-detail">
+
+            <div class="card">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="card-text">Price: @Model.Price.ToString("#,##0") bir</p>
+                    </div>
+
+                    <div class="col-12 agent">
+                        <p class="">Agent: @Model.Agent?.Account?.FirstName @Model.Agent?.Account?.LastName</p>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row contact">
+
+                            <div class="col-lg-4 col-6 box">
+                                <button class="btn btn-primary"><i class="bx bx-envelope"></i> Email</button>
+                            </div>
+
+                            <div class="col-lg-4 col-6 box">
+                                <button class="btn btn-success"><i class="bx bxl-whatsapp-square"></i> Whatsapp</button>
+                            </div>
+
+                            <div class="col-lg-4 col-6 box call">
+                                <button class="btn btn-danger"><i class="bx bx-phone-call"></i> Call</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-12 mt-5">
+            <h5>Property Description:</h5>
+            <p class="description">
+                @Model.Description
+            </p>
+        </div>
+
+
+
+    </div>
+</section>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+
