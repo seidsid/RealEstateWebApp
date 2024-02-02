@@ -1,0 +1,187 @@
+﻿@model PropertyListViewModel
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment webHostEnvironment
+
+<!-- box icons -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<link rel="stylesheet" href="/css/displayProperty.css">
+<link rel="stylesheet" href="/css/header.css">
+
+@{
+    ViewData["Title"] = "Properties";
+}
+
+<section class="filters">
+    <form method="post" asp-action="DisplayFilters" asp-controller="Property">
+        <div class="row">
+
+            <div class="col-lg-3 col-8 col">
+                <div class="input-group">
+                    <button asp-for="Filter.SearchValue"  class="input-group-text"><i class='bx bx-search-alt-2'></i></button>
+                    <input type="text" class="form-control" asp-for="Filter.SearchValue" placeholder="City, sub-city, name" name="SearchValue">
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-4 col">
+                <select class="form-select" asp-for="Filter.BuyRent" name="BuyRent">
+                    <option value="active_sell">Buy</option>
+                    <option value="active_rent">Rent</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-6 col">
+                <select class="form-select" asp-for="Filter.PropertyType" name="PropertyType">
+                        <option value="" selected>Property Type</option>
+                        <option value="house">House</option>
+                        <option value="villa">Villa</option>
+                        <option value="whole_building">Whole Building</option>
+                        <option value="land">Land</option>
+                        <option value="hotel">Hotel & Hotel Apartment</option>
+                        <option value="apartment">Apartment</option>
+                     </select>
+            </div>
+
+            <div class="col-lg-2 col-6 col">
+                <div class="dropdown light">
+                    <button class="btn dropdown-toggle" type="button" id="bedsBathDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Beds & Bath
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="bedsBathDropdown">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <label asp-for="Filter.bed" for="bedroomsInput" class="form-label">Bedrooms:</label>
+                                    <input type="number" class="form-control" asp-for="Filter.bed" id="bedroomsInput" name="bed" min="0">
+                                </div>
+
+                                <div class="col">
+                                    <label asp-for="Filter.bath" for="bathroomsInput" class="form-label">Bathrooms:</label>
+                                    <input type="number" class="form-control" asp-for="Filter.bath" id="bathroomsInput" name="bath" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-6 col">
+                <div class="dropdown light">
+                    <button class="btn dropdown-toggle" type="button" id="price" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Price
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="price">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <label asp-for="Filter.min" for="minPrice" class="form-label price-input">Min Price:</label>
+                                        <input type="number" class="form-control" asp-for="Filter.min" min="0" step="1000" name="min">
+                                </div>
+
+                                <div class="col">
+                                    <label asp-for="Filter.max" for="maxPrice" class="form-label price-input">Max Price:</label>
+                                        <input type="number" class="form-control" asp-for="Filter.max" min="0" step="1000" name="max">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-1 col-6 col">
+                <button type="submit" class="btn btn-primary" id="findButton">Find</button>
+            </div>
+
+        </div>
+    </form>
+</section>
+
+
+    <!-- Separator -->
+<div class="container-fluid line">
+    <div class="row">
+        <div class="col-12">
+            <div class="border-top w-100"></div>
+        </div>
+    </div>
+</div>
+
+
+<section class="property">
+    <div class="container prop">
+        @foreach (var property in Model.Model)
+        {
+            var imagePath = $"{webHostEnvironment.WebRootPath}/images/{property.PropertyId}/";
+            var imageFiles = System.IO.Directory.GetFiles(imagePath);
+            var firstImage = imageFiles.FirstOrDefault();
+            var imageCount = System.IO.Directory.GetFiles(imagePath).Length;
+
+
+
+            <div class="row">
+                <!-- Property image -->
+             <a href="@Url.Action("DisplayPropertyDetail", "Property", new { id = property.PropertyId })" class="col-lg-6 col-12 prop-img property-link" style="color: inherit; text-decoration: none;">
+
+                    @if (!string.IsNullOrEmpty(firstImage))
+                    {
+                        <img src="@Url.Content("~" + firstImage.Replace(webHostEnvironment.WebRootPath, string.Empty))" class="img-fluid" alt="Property image">
+                    }
+                    else
+                    {
+                        <p>No image available</p>
+                    }
+            </a>
+
+                <!-- Property details -->
+                <div class="col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@property.Title</h5>
+                            <p class="card-title"><i class='bx bx-building-house' style='color:#e38609'></i> @property.PropertyType</p>
+                            <p class="card-text">Price: @property.Price.ToString("#,##0") bir</p>
+                            <p class="card-text"><i class='bx bx-current-location' style='color:#ff0005'></i> @(property.Address?.City ?? "N/A") @(property.Address?.SubCity ?? "N/A")</p>
+                            
+                            <div class="row">
+                                <p class="col-6 col card-text"><i class='bx bx-bed'></i> @property.NoBedrooms</p>
+                                <p class="col-6 col card-text"><i class='bx bx-bath'></i> @property.NoBathrooms</p>
+                            </div>
+
+                            <div class="row">
+                                <p class="col-6 col card-text">Size: @property.PropertySize sqft</p>
+                                <p class="col-6 col card-text d-flex justify-content-end">
+                                    Agent:
+                                    @(property.Agent?.Account?.FirstName ?? "N/A") @(property.Agent?.Account?.LastName ?? "N/A")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-wrapper">
+                    <div class="row">
+                        <div class="col-lg-6 col-12 agent">
+                            <h5 class="col-lg-6 col-12 listed-date">Listed on: @property.ListedDate</h5>
+                            <h5><i class='bx bx-camera' style='color:#2b2828'></i> @imageCount</h5>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="row contact">
+                                <div class="col-lg-3 box">
+                                    <button class="btn btn-primary"><i class="bx bx-envelope"></i> Email</button>
+                                </div>
+                                <div class="col-lg-3 box">
+                                    <button class="btn btn-success"><i class="bx bxl-whatsapp-square"></i> Whatsapp</button>
+                                </div>
+                                <div class="col-lg-3 box">
+                                    <button class="btn btn-danger"><i class="bx bx-phone-call"></i> Call</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+
+

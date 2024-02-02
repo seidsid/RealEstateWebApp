@@ -1,4 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NurRealEstateWebApp.Entities;
 using Pomelo.EntityFrameworkCore.MySql;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace NurRealEstateWebApp.Models
 {
-    public partial class NurDbContext : DbContext
+    public partial class NurDbContext : IdentityDbContext<AppUser>
     {
 
         public NurDbContext(DbContextOptions<NurDbContext> options) : base(options)
@@ -35,6 +36,8 @@ namespace NurRealEstateWebApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.AccountId).HasName("PRIMARY");

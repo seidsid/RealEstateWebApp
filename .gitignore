@@ -11,3 +11,9 @@
 
 *.ico
 NurRealEstateWebApp/Controllers/HomeController.cs
+*.ts
+*.json
+*.flow
+*.map
+*.js
+*.md

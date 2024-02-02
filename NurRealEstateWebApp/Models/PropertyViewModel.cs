@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NurRealEstateWebApp.Entities;
     using System.ComponentModel.DataAnnotations;
 
@@ -41,7 +41,7 @@ using NurRealEstateWebApp.Entities;
             [Required(ErrorMessage = "Status is required.")]
             public string Status { get; set; }
 
-            public AddressViewModel Address { get; set; }
+            public virtual AddressViewModel Address { get; set; }
 
             public List<IFormFile> Images { get; set; }
 

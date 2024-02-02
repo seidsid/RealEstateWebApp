@@ -3,6 +3,7 @@ using Pomelo.EntityFrameworkCore.MySql;
 using NurRealEstateWebApp.Models;
 using NurRealEstateWebApp.Service;
 using NurRealEstateWebApp.Repository;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddScoped<NurDbContext, NurDbContext>();
 builder.Services.AddDbContext<NurDbContext>(options => {
     options.UseMySQL(builder.Configuration.GetConnectionString("MyConnection"));
 });
+
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<NurDbContext>().AddDefaultTokenProviders();
 
 
 // Injections
@@ -42,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Property}/{action=AddProperty}/{id?}");
+    pattern: "{controller=Property}/{action=DisplayProperty}/{id?}");
 
 app.Run();

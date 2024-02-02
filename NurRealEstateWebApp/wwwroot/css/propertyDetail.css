@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --bg-color: #27AE60;
+    --second-bg-color: #F4F4F4;
+    --text-color: #555555 ;
+    --text-heading: #333333;
+    --link: #27AE60;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--second-bg-color);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-color);
+}
+
+.prop-detail .card  {
+    padding: 5px;
+    height: 140px;
+    width: 390px;
+}
+
+h5 {
+    font-weight: 600;
+}
+
+.first-img img {
+    height: 600px;
+    width: 770px;
+}
+
+.main-container {
+    margin-top: 15px;
+}
+
+.second-img img {
+    height: 295px;
+    width: 370px;
+/*     border: 1px solid red;
+ */}
+
+.second-first-img {
+    margin-bottom: 10px;
+}
+
+.image {
+    margin-bottom: 15px;
+}
+
+
+
+@media (max-width: 1420px) {
+    .prop-detail .card  {
+        padding: 5px;
+        height: 165px;
+        width: 390px;
+    }
+
+    .prop-detail .card .call {
+        margin-top: 5px;
+    }
+
+    .first-img img {
+        height: 410px;
+        width: 555px;
+    }
+
+    .second-img img {
+        height: 203px;
+        width: 370px;
+    }
+
+    .second-first-img {
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 1120px) {
+    .first-img img {
+        height: 410px;
+        width: 555px;
+    }
+
+    .second-img img {
+        height: 203px;
+        width: 370px;
+    }
+
+    .second-first-img {
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 720px) {
+    .first-img img {
+        height: 410px;
+        width: 325px;
+    }
+
+    .second-img img {
+        height: 203px;
+        width: 170px;
+    }
+
+    .second-first-img {
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 695px) {
+    .first-img img {
+        height: 365px;
+        width: 325px;
+    }
+
+    .second-img img {
+        height: 180px;
+        width: 170px;
+    }
+
+    .second-first-img {
+        margin-bottom: 4px;
+    }
+}
+
+@media (max-width: 510px) {
+    .first-img img {
+        height: 265px;
+        width: 280px;
+    }
+
+    .second-img img {
+        height: 130px;
+        width: 130px;
+    }
+
+    .second-first-img {
+        margin-bottom: 4px;
+    }
+}
+
