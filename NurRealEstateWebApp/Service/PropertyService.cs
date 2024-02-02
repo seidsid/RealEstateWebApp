@@ -1,4 +1,4 @@
-﻿using NurRealEstateWebApp.Entities;
+using NurRealEstateWebApp.Entities;
 using NurRealEstateWebApp.Models;
 using NurRealEstateWebApp.Repository;
 

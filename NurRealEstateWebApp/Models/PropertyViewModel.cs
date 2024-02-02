@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using NurRealEstateWebApp.Entities;
     using System.ComponentModel.DataAnnotations;
 
